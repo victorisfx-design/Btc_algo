@@ -599,7 +599,10 @@ async def ws_ep(ws: WebSocket):
 # ── STARTUP ───────────────────────────────────────────────────────────────
 @app.on_event("startup")
 async def startup():
+    print("🚀 Starting BTC Options Algo server...")
+    print("📂 Initializing local database...")
     init_db()
+    print("📡 Connecting to Delta Exchange API to detect account...")
     await detect_account()
     print("=" * 55)
     print("  BTC Options Algo — Delta Exchange")
