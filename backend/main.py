@@ -164,7 +164,7 @@ async def detect_account():
                     )
                     account_info["email"]    = data.get("email", "")
                     account_info["detected"] = True
-                    print(f"✅ Account: {account_info['name']} ({account_info['email']})")
+                    print(f"[OK] Account: {account_info['name']} ({account_info['email']})")
     except Exception as e:
         print(f"[ACCOUNT] {e}")
 
@@ -186,7 +186,7 @@ async def detect_account():
                             if bal > 0:
                                 account_info["delta_balance"] = bal
                                 update_balance(bal)
-                                print(f"✅ Balance synced: {sym} {bal:,.2f}")
+                                print(f"[OK] Balance synced: {sym} {bal:,.2f}")
                                 break
     except Exception as e:
         print(f"[WALLET] {e}")
@@ -352,7 +352,7 @@ async def live_feed():
                 except asyncio.TimeoutError:
                     continue
     except Exception as e:
-        print(f"[WS] {e} — falling back to simulation")
+        print(f"[WS] {e} - falling back to simulation")
         state.log("⚠️  WS disconnected — switching to simulation")
         await simulate_feed()
 
@@ -599,13 +599,13 @@ async def ws_ep(ws: WebSocket):
 # ── STARTUP ───────────────────────────────────────────────────────────────
 @app.on_event("startup")
 async def startup():
-    print("🚀 Starting BTC Options Algo server...")
-    print("📂 Initializing local database...")
+    print("[START] Starting BTC Options Algo server...")
+    print("[DB] Initializing local database...")
     init_db()
-    print("📡 Connecting to Delta Exchange API to detect account...")
+    print("[API] Connecting to Delta Exchange API to detect account...")
     await detect_account()
     print("=" * 55)
-    print("  BTC Options Algo — Delta Exchange")
+    print("  BTC Options Algo - Delta Exchange")
     print("=" * 55)
     print(f"  Account  : {account_info['name']} ({account_info['email']})")
     print(f"  Balance  : {get_balance():,.2f}")
